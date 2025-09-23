@@ -1,13 +1,14 @@
-class Authentication{
-  static final Map<String,String> _users = {};
+import 'package:app_pagamento_motoboys/model/user.dart';
+import 'package:app_pagamento_motoboys/services/userService.dart';
 
-  static bool authenticate(String user, String password){
-    final pass = _users[user.trim()];
-    return pass != null && pass == password;
+class Authentication {
+  static final Future<List<User>> _users = UserService().getUsers();
+
+  static Future<bool> authenticate(String user, String password) async {
+    final List<User> usuarios = await _users;
+    final auth = usuarios.any((usuario) {
+      return usuario.usuario == user && usuario.senha == password;
+    });
+    return auth;
   }
-
-  static void registerUser(String user, String password) {
-    _users[user.trim()] = password.trim();
-  }
-
 }
