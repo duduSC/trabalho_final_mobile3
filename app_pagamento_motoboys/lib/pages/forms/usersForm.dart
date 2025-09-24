@@ -3,7 +3,6 @@ import 'package:app_pagamento_motoboys/router.dart';
 import 'package:app_pagamento_motoboys/services/userService.dart';
 import 'package:flutter/material.dart';
 
-// 1. O construtor agora só precisa do serviço, já que não há mais edição.
 class Usersform extends StatefulWidget {
   final UserService service;
   const Usersform({super.key, required this.service});
@@ -14,10 +13,10 @@ class Usersform extends StatefulWidget {
 
 class _UsersformState extends State<Usersform> {
   final _formKey = GlobalKey<FormState>();
-  // 2. Os controladores são inicializados diretamente, sem valores iniciais.
   final _username = TextEditingController();
   final _password = TextEditingController();
   bool _saving = false;
+  bool _obscure = true;
 
   @override
   void dispose() {
@@ -26,11 +25,10 @@ class _UsersformState extends State<Usersform> {
     super.dispose();
   }
 
-  // 3. A função de salvar foi simplificada para APENAS criar.
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
     setState(() => _saving = true);
-    
+
     try {
       final model = User(
         nome: _username.text.trim(),
@@ -38,8 +36,13 @@ class _UsersformState extends State<Usersform> {
       );
 
       await widget.service.createUser(model);
-      
-      if (mounted) Navigator.pushReplacementNamed(context, Routes.login);
+
+      if (mounted) {
+        Navigator.pushReplacementNamed(context, Routes.login);
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Usuário $_username criado!')));
+      }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(
@@ -51,13 +54,10 @@ class _UsersformState extends State<Usersform> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Novo Usuário'),
-      ),
+      appBar: AppBar(title: const Text('Novo Usuário')),
       body: AbsorbPointer(
         absorbing: _saving,
         child: Padding(
@@ -69,17 +69,31 @@ class _UsersformState extends State<Usersform> {
                 TextFormField(
                   controller: _username,
                   decoration: const InputDecoration(labelText: 'Username'),
-                  validator: (v) =>
-                      (v == null || v.trim().isEmpty) ? 'Informe username' : null,
+                  validator: (v) => (v == null || v.trim().isEmpty)
+                      ? 'Informe username'
+                      : null,
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
                   controller: _password,
-                  decoration: const InputDecoration(labelText: 'Password'),
+                  decoration: InputDecoration(
+                    labelText: 'Senha',
+                    prefixIcon: const Icon(Icons.lock_outline),
+                    border: const OutlineInputBorder(),
+                    suffixIcon: IconButton(
+                      onPressed: () => setState(() => _obscure = !_obscure),
+                      icon: Icon(
+                        _obscure ? Icons.visibility : Icons.visibility_off,
+                      ),
+                    ),
+                  ),
+                  obscureText: _obscure,
+                  onFieldSubmitted: (_) => _save,
                   validator: (v) {
-                    final value = v?.trim() ?? '';
-                    if (value.isEmpty) return 'Informe a senha';
-                    return null; 
+                    if (v == null || v.isEmpty) {
+                      return 'Informe a senha';
+                    }
+                    return null;
                   },
                 ),
                 const SizedBox(height: 24),
@@ -92,7 +106,7 @@ class _UsersformState extends State<Usersform> {
                           child: CircularProgressIndicator(strokeWidth: 2),
                         )
                       : const Icon(Icons.save_outlined),
-                  label: const Text('Criar Usuario'), 
+                  label: const Text('Criar Usuario'),
                 ),
               ],
             ),

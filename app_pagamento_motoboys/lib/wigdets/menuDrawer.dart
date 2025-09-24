@@ -1,5 +1,7 @@
+import 'package:app_pagamento_motoboys/provider/userProvider.dart';
 import 'package:app_pagamento_motoboys/router.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Menudrawer extends StatelessWidget {
   const Menudrawer({super.key});
@@ -14,11 +16,8 @@ class Menudrawer extends StatelessWidget {
   }
 
   void _logoff(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      Routes.login,
-      (route) => false,
-    );
+    Provider.of<Userprovider>(context, listen: false).cleanUser();
+    Navigator.pushNamedAndRemoveUntil(context, Routes.login, (route) => false);
   }
 
   @override
@@ -67,7 +66,7 @@ class Menudrawer extends StatelessWidget {
                     selected: current == Routes.config,
                     onTap: () => _go(context, Routes.config),
                   ),
-                   ListTile(
+                  ListTile(
                     leading: const Icon(Icons.info),
                     title: const Text('Sobre'),
                     selected: current == Routes.sobre,

@@ -42,7 +42,7 @@ Future<void> _doLogin() async {
 
     Provider.of<Userprovider>(context, listen: false).setUser(user);
 
-    Navigator.pushReplacementNamed(context, Routes.home);
+    Navigator.pushNamed(context, Routes.home);
 
   } catch (e) {
     if (!mounted) return;
