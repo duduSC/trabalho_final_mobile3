@@ -1,4 +1,5 @@
 import 'package:app_pagamento_motoboys/model/user.dart';
+import 'package:app_pagamento_motoboys/router.dart';
 import 'package:app_pagamento_motoboys/services/userService.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +39,7 @@ class _UsersformState extends State<Usersform> {
 
       await widget.service.createUser(model);
       
-      if (mounted) Navigator.of(context).pop(true);
+      if (mounted) Navigator.pushReplacementNamed(context, Routes.login);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(

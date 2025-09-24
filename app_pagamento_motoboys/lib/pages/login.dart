@@ -133,6 +133,15 @@ Future<void> _doLogin() async {
                             child: const Text('Entrar'),
                           ),
                         ),
+                        const SizedBox(height: 25),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: ElevatedButton(
+                            onPressed: ()=>Navigator.pushReplacementNamed(context, Routes.usersForm),
+                            child: const Text('Cadastrar novo usuário'),
+                          )
+                          )
                       ],
                     ),
                   ),

@@ -65,7 +65,7 @@ class Menudrawer extends StatelessWidget {
                     leading: const Icon(Icons.settings),
                     title: const Text('Configuração'),
                     selected: current == Routes.config,
-                    onTap: () => _go(context, Routes.users),
+                    onTap: () => _go(context, Routes.config),
                   ),
                    ListTile(
                     leading: const Icon(Icons.info),
