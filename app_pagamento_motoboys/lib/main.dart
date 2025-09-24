@@ -1,91 +1,71 @@
+import 'package:app_pagamento_motoboys/pages/forms/usersForm.dart';
+import 'package:app_pagamento_motoboys/pages/home.dart';
+import 'package:app_pagamento_motoboys/pages/login.dart';
+import 'package:app_pagamento_motoboys/pages/motoboys.dart';
+import 'package:app_pagamento_motoboys/pages/forms/motoboysForm.dart';
+import 'package:app_pagamento_motoboys/provider/userProvider.dart';
+import 'package:app_pagamento_motoboys/router.dart';
+import 'package:app_pagamento_motoboys/services/motoboyService.dart';
+import 'package:app_pagamento_motoboys/services/userService.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-void main() async {
-  await dotenv.load(fileName: ".env");
-  runApp(const MyApp());
+import 'package:provider/provider.dart';
+
+//import 'pages/homeTabBarPage.dart';
+
+void main() {
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => Userprovider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget{
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final userService = UserService();
+    final motoboyService = MotoboyService();
+
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+      title: 'Meu app',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(colorSchemeSeed: Colors.indigo, useMaterial3: true),
+      initialRoute: Routes.login,
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case Routes.login:
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: Routes.login),
+              builder: (_) => const Login(),
+            );
+          case Routes.home:
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: Routes.home),
+              builder: (_) => const Home(),
+            );
+          case Routes.usersForm:
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: Routes.usersForm),
+              builder: (_) => Usersform(service: userService),
+            );
+          case Routes.motoboys:
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: Routes.motoboys),
+              builder: (_) => Motoboys(service: motoboyService),
+            );
+          case Routes.motoboyForm:
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: Routes.motoboyForm),
+              builder: (_) => Motoboysform(service: motoboyService),
+            );
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Scaffold(
-      appBar: AppBar(
-
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-        title: Text(widget.title),
-      ),
-      body: Center(
-
-        child: Column(
-
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+          default:
+            return MaterialPageRoute(builder: (_) => const Login());
+        }
+      },
     );
   }
 }

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:app_pagamento_motoboys/model/motoboy.dart';
 import 'package:http/http.dart' as http;
 
-class UserService {
+class MotoboyService {
   static String _url = "https://68d1ccfde6c0cbeb39a5d531.mockapi.io/motoboys";
   final Uri _uri = Uri.parse(_url);
 
@@ -43,7 +43,7 @@ class UserService {
   Future<Motoboy> updateMotoboy(Motoboy motoboy) async {
     final response = await http.put(Uri.parse("$_uri/${motoboy.id}"), headers:
     {"Content-Type": "application/json"},
-        body: json.encode(motoboy.toJson()));
+        body: json.encode(motoboy.toJsonEdit()));
     if (response.statusCode == 200) {
       return Motoboy.fromJson(json.decode(response.body));
     } else {

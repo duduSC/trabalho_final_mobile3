@@ -1,14 +1,14 @@
 class Motoboy{
   String? id;
-  String? nome;
-  String? cpf;
+  String nome;
+  String cpf;
   List<String>? teles;
 
 
   Motoboy({
     this.id,
-    this.nome,
-    this.cpf,
+    required this.nome,
+    required this.cpf,
     this.teles
   });
 
@@ -20,6 +20,13 @@ class Motoboy{
       "teles": teles
     };
   }
+    Map<String,dynamic> toJsonEdit(){
+    return {
+      "id" : id,
+      "nome": nome,
+      "cpf": cpf,
+    };
+  }
   factory Motoboy.fromJson(
       Map<String,dynamic> json
       ){
@@ -27,7 +34,7 @@ class Motoboy{
         id: json['id']?.toString(),
         nome: json['nome'] ?? "",
         cpf: json['cpf'] ?? "",
-        teles: json['teles']?? []
+        teles: json['teles'] != null ? List<String>.from(json["teles"]): []
     );
   }
 }

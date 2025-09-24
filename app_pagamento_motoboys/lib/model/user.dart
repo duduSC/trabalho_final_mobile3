@@ -1,19 +1,19 @@
 class User {
-  String? id;
-  String? usuario;
-  String? senha;
+  final String? id;
+  String nome;
+  String senha;
 
 
   User({
     this.id,
-    this.usuario,
-    this.senha
+    required this.nome,
+    required this.senha
   });
 
   Map<String,dynamic> toJson(){
     return {
       "id" : id,
-      "usuario": usuario,
+      "nome": nome,
       "senha": senha
     };
   }
@@ -22,7 +22,7 @@ class User {
       ){
     return User(
       id: json['id']?.toString(),
-      usuario: json['usuario'] ?? "",
+      nome: json['nome']?? "",
       senha: json['senha'] ?? ""
     );
   }
