@@ -22,9 +22,7 @@ class _GerenciamentoTelesPageState extends State<GerenciamentoTelesPage> {
   final _mapsService = MapsService();
   final _tabelaPrecosService = Tabelapreco();
 
-  // Defina um endereço de origem fixo para os cálculos
-  // Mude para o endereço real do seu estabelecimento
-  final String _enderecoOrigem = "-28.232667,-52.381083";
+  final String _enderecoOrigem = "-28.232667,-52.381083"; 
 
   @override
   void initState() {
@@ -48,7 +46,7 @@ class _GerenciamentoTelesPageState extends State<GerenciamentoTelesPage> {
     );
 
     try {
-      final double distanciaKm = await _mapsService.getDistance(_enderecoOrigem, enderecoDestino);
+      final double distanciaKm = await _mapsService.getDistance(_enderecoOrigem.trim(), enderecoDestino.trim());
 
       final double valor = _tabelaPrecosService.calcularValorDaTele(distanciaKm);
 
