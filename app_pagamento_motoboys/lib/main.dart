@@ -1,8 +1,11 @@
+import 'package:app_pagamento_motoboys/pages/config.dart';
 import 'package:app_pagamento_motoboys/pages/forms/usersForm.dart';
+import 'package:app_pagamento_motoboys/pages/gerenciaTeles.dart';
 import 'package:app_pagamento_motoboys/pages/home.dart';
 import 'package:app_pagamento_motoboys/pages/login.dart';
 import 'package:app_pagamento_motoboys/pages/motoboys.dart';
 import 'package:app_pagamento_motoboys/pages/forms/motoboysForm.dart';
+import 'package:app_pagamento_motoboys/pages/sobre.dart';
 import 'package:app_pagamento_motoboys/provider/userProvider.dart';
 import 'package:app_pagamento_motoboys/router.dart';
 import 'package:app_pagamento_motoboys/services/motoboyService.dart';
@@ -61,7 +64,21 @@ class MyApp extends StatelessWidget {
               settings: const RouteSettings(name: Routes.motoboyForm),
               builder: (_) => Motoboysform(service: motoboyService),
             );
-
+          case Routes.teles:
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: Routes.teles),
+              builder: (_) => GerenciamentoTelesPage(service: motoboyService),
+            );
+          case Routes.sobre:
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: Routes.sobre),
+              builder: (_) => Sobre(),
+            );
+            case Routes.config:
+            return MaterialPageRoute(
+              settings: const RouteSettings(name: Routes.sobre),
+              builder: (_) => Config(),
+            );
           default:
             return MaterialPageRoute(builder: (_) => const Login());
         }

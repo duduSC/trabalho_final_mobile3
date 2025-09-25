@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 
 class CardNavegacao extends StatelessWidget {
   final IconData icone;
   final String titulo;
-  final Widget paginaDestino; 
+  final String paginaDestino;
 
   const CardNavegacao({
     super.key,
@@ -17,24 +16,17 @@ class CardNavegacao extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => paginaDestino),
-        );
+        Navigator.pushNamed(context,paginaDestino);
       },
       child: Card(
-        elevation: 5, 
+        elevation: 5,
         child: SizedBox(
-          width: 150, 
+          width: 150,
           height: 150,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icone,
-                size: 60,
-                color: Theme.of(context).primaryColor,
-              ),
+              Icon(icone, size: 60, color: Theme.of(context).primaryColor),
               const SizedBox(height: 10),
               Text(
                 titulo,

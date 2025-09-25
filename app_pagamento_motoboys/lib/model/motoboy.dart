@@ -1,40 +1,43 @@
-class Motoboy{
+class Motoboy {
   String? id;
   String nome;
   String cpf;
+  String telefone;
   List<String>? teles;
-
 
   Motoboy({
     this.id,
     required this.nome,
     required this.cpf,
-    this.teles
+    required this.telefone,
+    this.teles,
   });
 
-  Map<String,dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     return {
-      "id" : id,
+      "id": id,
       "nome": nome,
       "cpf": cpf,
-      "teles": teles
+      "telefone": telefone,
+      "teles": teles,
     };
   }
-    Map<String,dynamic> toJsonEdit(){
-    return {
-      "id" : id,
-      "nome": nome,
-      "cpf": cpf,
-    };
+
+  Map<String, dynamic> toJsonEdit() {
+    return {"id": id, "nome": nome, "cpf": cpf, "telefone": telefone};
   }
-  factory Motoboy.fromJson(
-      Map<String,dynamic> json
-      ){
+
+  Map<String, dynamic> toJsonTele() {
+    return {"teles": teles};
+  }
+
+  factory Motoboy.fromJson(Map<String, dynamic> json) {
     return Motoboy(
-        id: json['id']?.toString(),
-        nome: json['nome'] ?? "",
-        cpf: json['cpf'] ?? "",
-        teles: json['teles'] != null ? List<String>.from(json["teles"]): []
+      id: json['id']?.toString(),
+      nome: json['nome'] ?? "",
+      cpf: json['cpf'] ?? "",
+      telefone: json['telefone'] ?? "",
+      teles: json['teles'] != null ? List<String>.from(json["teles"]) : [],
     );
   }
 }

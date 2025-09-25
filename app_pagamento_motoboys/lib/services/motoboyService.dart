@@ -30,9 +30,10 @@ class MotoboyService {
 
   Future<Motoboy> createMotoboy(Motoboy motoboy) async {
     final response = await http.post(
-        _uri,
-        headers: {"Content-Type": "Application/json"},
-        body: json.encode(motoboy.toJson()));
+      _uri,
+      headers: {"Content-Type": "Application/json"},
+      body: json.encode(motoboy.toJsonEdit()),
+    );
     if (response.statusCode == 201 || response.statusCode == 200) {
       return Motoboy.fromJson(json.decode(response.body));
     } else {
@@ -41,9 +42,32 @@ class MotoboyService {
   }
 
   Future<Motoboy> updateMotoboy(Motoboy motoboy) async {
-    final response = await http.put(Uri.parse("$_uri/${motoboy.id}"), headers:
-    {"Content-Type": "application/json"},
-        body: json.encode(motoboy.toJsonEdit()));
+    final response = await http.put(
+      Uri.parse("$_uri/${motoboy.id}"),
+      headers: {"Content-Type": "application/json"},
+      body: json.encode(motoboy.toJson()),
+    );
+    if (response.statusCode == 200) {
+      return Motoboy.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Erro ao atualizar ${response.statusCode}");
+    }
+  }
+
+  Future<Motoboy> createTele({
+    required String idMotoboy,
+    required String novaTele,
+  }) async {
+    final motoboy = await getMotoboy(idMotoboy);
+    motoboy.teles = motoboy.teles ?? [] ;
+    motoboy.teles!.add(novaTele);
+
+    final response = await http.put(
+      Uri.parse("$_uri/${motoboy.id}"),
+      headers: {"Content-Type": "application/json"},
+      body: json.encode(motoboy.toJson()),
+    );  
+
     if (response.statusCode == 200) {
       return Motoboy.fromJson(json.decode(response.body));
     } else {

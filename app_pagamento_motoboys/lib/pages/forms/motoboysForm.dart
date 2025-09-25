@@ -15,19 +15,23 @@ class _MotoboysformState extends State<Motoboysform> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _nome;
   late TextEditingController _cpf;
+  late TextEditingController _telefone;
+
   bool _saving = false;
-  
+
   @override
   void initState() {
     super.initState();
     _nome = TextEditingController(text: widget.initial?.nome ?? "");
     _cpf = TextEditingController(text: widget.initial?.cpf ?? "");
+    _telefone = TextEditingController(text: widget.initial?.cpf ?? "");
   }
 
   @override
   void dispose() {
     _nome.dispose();
     _cpf.dispose();
+    _telefone.dispose();
     super.dispose();
   }
 
@@ -38,6 +42,7 @@ class _MotoboysformState extends State<Motoboysform> {
       final model = Motoboy(
         id: widget.initial?.id,
         nome: _nome.text.trim(),
+        telefone: _telefone.text.trim(),
         cpf: _cpf.text.trim(),
       );
 
@@ -46,7 +51,7 @@ class _MotoboysformState extends State<Motoboysform> {
       } else {
         await widget.service.updateMotoboy(model);
       }
-      if (mounted) Navigator.of(context).pop(true); 
+      if (mounted) Navigator.of(context).pop(true);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(
@@ -129,11 +134,19 @@ class _MotoboysformState extends State<Motoboysform> {
                   decoration: const InputDecoration(labelText: 'CPF'),
                   validator: (v) {
                     final value = v?.trim() ?? '';
-                    if (value.isEmpty || v==null) return 'Informe o CPF';
-
+                    if (value.isEmpty || v == null) return 'Informe o CPF';
                   },
                 ),
                 const SizedBox(height: 24),
+                TextFormField(
+                  controller: _telefone,
+                  decoration: const InputDecoration(labelText: 'Telefone'),
+                  validator: (v) {
+                    final value = v?.trim() ?? '';
+                    if (value.isEmpty || v == null) return 'Informe o telefone';
+                  },
+                ),
+               const SizedBox(height: 24),
                 FilledButton.icon(
                   onPressed: _saving ? null : _save,
                   icon: _saving

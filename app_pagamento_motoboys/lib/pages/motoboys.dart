@@ -37,6 +37,7 @@ class _MotoboysState extends State<Motoboys> {
     if (changed == true) _reload();
   }
 
+  
   Widget _motoboyCard(Motoboy m) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -56,7 +57,7 @@ class _MotoboysState extends State<Motoboys> {
                   ),
                 ),
               ),
-              const Icon(Icons.chevron_right),
+              Icon(Icons.arrow_forward)
             ],
           ),
         ),
