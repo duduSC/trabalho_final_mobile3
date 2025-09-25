@@ -22,7 +22,7 @@ class TemaService {
 
   void toggleTema() {
     final isDarkMode = temaNotifier.value == ThemeMode.dark;
-    temaNotifier.value = isDarkMode ? ThemeMode.dark : ThemeMode.light;
-    _saveTema(isDarkMode);
+    temaNotifier.value = isDarkMode ? ThemeMode.light : ThemeMode.dark;
+    _saveTema(!isDarkMode);
   }
 }
