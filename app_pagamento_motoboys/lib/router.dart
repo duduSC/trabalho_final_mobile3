@@ -7,5 +7,4 @@ class Routes {
   static const teles = "/teles";
   static const config = "/config";
   static const sobre = "/sobre";
-  
 }

@@ -1,5 +1,5 @@
 import 'package:app_pagamento_motoboys/model/motoboy.dart';
-import 'package:app_pagamento_motoboys/model/tele.dart'; // Importe o novo modelo
+import 'package:app_pagamento_motoboys/model/tele.dart'; 
 import 'package:app_pagamento_motoboys/services/mapsService.dart';
 import 'package:app_pagamento_motoboys/services/motoboyService.dart';
 import 'package:app_pagamento_motoboys/services/tabelaPreco.dart';
@@ -18,7 +18,6 @@ class _GerenciamentoTelesPageState extends State<GerenciamentoTelesPage> {
   late Future<List<Motoboy>> _futureMotoboys;
   final Map<String, TextEditingController> _controllers = {};
 
-  // Crie instâncias dos serviços que vamos precisar
   final _mapsService = MapsService();
   final _tabelaPrecosService = Tabelapreco();
 
@@ -77,7 +76,7 @@ class _GerenciamentoTelesPageState extends State<GerenciamentoTelesPage> {
 
   @override
   Widget build(BuildContext context) {
-    // O resto do seu build continua igual...
+
     return Scaffold(
       drawer: const Menudrawer(),
       appBar: AppBar(

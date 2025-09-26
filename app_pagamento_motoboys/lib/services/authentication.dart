@@ -11,10 +11,7 @@ class Authentication {
 
     final usuario = usuarios.firstWhere(
       (x) {
-        // --- LINHA DE DEBUG ---
-        // Esta linha vai mostrar exatamente o que está sendo comparado.
         print("Comparando usuário da lista: [${x.nome}] com o usuário digitado: [${user}]");
-        // --- FIM DO DEBUG ---
         return x.nome == user;
       },
       orElse: () => throw Exception("Usuário não encontrado."),

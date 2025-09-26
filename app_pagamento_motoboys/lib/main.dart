@@ -21,7 +21,7 @@ final motoboyService = MotoboyService();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env"); // Adicione esta linha
+  await dotenv.load(fileName: ".env"); 
   await Future.delayed(Duration(milliseconds: 50));
   runApp(
     ChangeNotifierProvider(
